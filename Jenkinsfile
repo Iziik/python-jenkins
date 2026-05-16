@@ -13,7 +13,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t "$IMAGE:$TAG" -t "$IMAGE:latest" .'
+                    sh 'docker build --no-cache -t "$IMAGE:$TAG" -t "$IMAGE:latest" .'
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy'){
             steps{
                 sh 'docker rm -f iziik-maven || true'
-                sh 'docker run -d --name iziik-maven -p 0:5000 "$IMAGE:$TAG"'
+                sh 'docker run -d --name iziik-maven -p 5000:5000 "$IMAGE:$TAG"'
                 
                 
                 // write deploy info with build number in the filename
@@ -52,7 +52,7 @@ EOF
 }
         stage ('test') {
             steps {
-                sh 'sleep 2; echo "Hit http://localhost:5001 to see the app."'
+                sh 'sleep 2; echo "Hit http://localhost:5000 to see the app."'
             }
         }
         
