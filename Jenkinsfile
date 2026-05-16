@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy'){
             steps{
                 sh 'docker rm -f iziik-maven || true'
-                sh 'docker run -d --name iziik-maven -p 5001:5000 "$IMAGE:$TAG"'
+                sh 'docker run -d --name iziik-maven -p 0:5000 "$IMAGE:$TAG"'
                 
                 
                 // write deploy info with build number in the filename
