@@ -13,7 +13,11 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
+<<<<<<< HEAD
                     sh 'docker build --no-cache -t "$IMAGE:$TAG" -t "$IMAGE:latest" .'
+=======
+                    sh 'docker build -t "$IMAGE:$TAG" -t "$IMAGE:latest" .'
+>>>>>>> 8aa8417 (first commit)
                 }
             }
         }
@@ -21,7 +25,11 @@ pipeline {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PWD', usernameVariable: 'DOCKERHUB_USER')]) {
                 sh 'echo "Logging in to Docker Hub..."'
+<<<<<<< HEAD
                 sh 'echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USER" --password-stdin '
+=======
+                echo ' "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USER" --password-stdin '
+>>>>>>> 8aa8417 (first commit)
                 sh 'docker push "$IMAGE:$TAG"'
                 sh 'docker push "$IMAGE:latest"'
 }
