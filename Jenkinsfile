@@ -13,6 +13,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
+
                     sh 'docker build --no-cache -t "$IMAGE:$TAG" -t "$IMAGE:latest" .'
                 }
             }
@@ -21,6 +22,7 @@ pipeline {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PWD', usernameVariable: 'DOCKERHUB_USER')]) {
                 sh 'echo "Logging in to Docker Hub..."'
+
                 sh 'echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USER" --password-stdin '
                 sh 'docker push "$IMAGE:$TAG"'
                 sh 'docker push "$IMAGE:latest"'
